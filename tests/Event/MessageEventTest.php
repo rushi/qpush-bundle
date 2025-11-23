@@ -53,7 +53,7 @@ class MessageEventTest extends \PHPUnit\Framework\TestCase
             return;
         }
 
-        $this->setExpectedException('PHPUnit_Framework_Error');
+        $this->expectException(\TypeError::class);
 
         new MessageEvent('test', ['bad argument']);
     }

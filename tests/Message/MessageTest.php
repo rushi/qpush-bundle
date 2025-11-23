@@ -49,7 +49,7 @@ class MessageTest extends BaseMessageTest
             return;
         }
 
-        $this->setExpectedException('PHPUnit_Framework_Error');
+        $this->expectException(\TypeError::class);
 
         new Message(123, ['foo' => 'bar'], 'invalid argument');
     }

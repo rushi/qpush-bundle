@@ -1,0 +1,36 @@
+name: Tests
+
+on:
+    push:
+        branches: [master, symfony-5.4]
+    pull_request:
+        branches: [master]
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                php: ["7.4"]
+
+        name: PHP ${{ matrix.php }}
+
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  extensions: mbstring, intl
+                  coverage: none
+
+            - name: Validate composer.json
+              run: composer validate --strict
+
+            - name: Install dependencies
+              run: composer install --prefer-dist --no-progress
+
+            - name: Run unit tests
+              run: ./run-tests.sh

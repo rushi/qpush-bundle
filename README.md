@@ -1,10 +1,14 @@
-QPush - Symfony2 Push Queue Bundle
-==================================
+QPush - Symfony Push Queue Bundle
+===================================
 
-[![Build Status](https://img.shields.io/travis/uecode/qpush-bundle/master.svg?style=flat-square)](https://travis-ci.org/uecode/qpush-bundle)
+[![Tests](https://github.com/rushi/qpush-bundle/workflows/Tests/badge.svg)](https://github.com/rushi/qpush-bundle/actions)
 [![Quality Score](https://img.shields.io/scrutinizer/g/uecode/qpush-bundle.svg?style=flat-square)](https://scrutinizer-ci.com/g/uecode/qpush-bundle/)
-[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/uecode/qpush-bundle.svg?style=flat-square)](https://scrutinizer-ci.com/g/uecode/qpush-bundle/)
 [![Total Downloads](http://img.shields.io/packagist/dt/uecode/qpush-bundle.svg?style=flat-square)](https://packagist.org/packages/uecode/qpush-bundle)
+
+## Requirements
+
+- **PHP 7.4** or higher
+- **Symfony 5.4** or higher
 
 ## Overview
 This bundle allows you to easily consume messages from Push Queues by simply
@@ -152,3 +156,27 @@ public function onMessageReceived(MessageEvent $event)
 
 Once all other Event Listeners have been invoked on a `MessageEvent`, the Bundle
 will automatically attempt to remove the Message from your Queue for you.
+
+## Testing
+
+Run the test suite:
+
+```bash
+./run-tests.sh
+```
+
+Or run specific test groups:
+
+```bash
+# Run all unit tests
+vendor/bin/phpunit --no-coverage --exclude-group integration
+
+# Run integration tests (requires IronMQ credentials)
+export IRONMQ_TOKEN="your_token"
+export IRONMQ_PROJECT_ID="your_project_id"
+vendor/bin/phpunit --group integration
+```
+
+## License
+
+This bundle is released under the MIT License. See the bundled LICENSE file for details.

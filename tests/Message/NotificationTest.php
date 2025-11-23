@@ -49,7 +49,7 @@ class NotificationTest extends BaseMessageTest
             return;
         }
 
-        $this->setExpectedException('PHPUnit_Framework_Error');
+        $this->expectException(\TypeError::class);
         
         new Notification(123, ['foo' => 'bar'], 'invalid argument');
     }

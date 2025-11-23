@@ -42,7 +42,7 @@ class ProviderRegistryTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals($this->createMock($interface), $registry->get('test'));
 
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $registry->get('foo');
     }
 }

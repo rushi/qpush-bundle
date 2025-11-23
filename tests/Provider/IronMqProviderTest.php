@@ -120,7 +120,7 @@ class IronMqProviderTest extends \PHPUnit\Framework\TestCase
             ]
         ]);
 
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $provider->create();
     }
 
@@ -135,7 +135,7 @@ class IronMqProviderTest extends \PHPUnit\Framework\TestCase
 
         // Last call throws an exception if there is an exception outside
         // of a HTTP 404
-        $this->setExpectedException('Exception');
+        $this->expectException('Exception');
         $this->provider->destroy();
     }
 
@@ -166,7 +166,7 @@ class IronMqProviderTest extends \PHPUnit\Framework\TestCase
 
         // Last call throws an exception if there is an exception outside
         // of a HTTP 404
-        $this->setExpectedException('Exception');
+        $this->expectException('Exception');
         $this->provider->delete(789);
     }
 
