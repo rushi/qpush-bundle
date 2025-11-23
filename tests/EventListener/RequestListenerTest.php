@@ -90,7 +90,7 @@ class RequestListenerTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals(123, $notification->getId());
 
-        $this->assertInternalType('array', $notification->getBody());
+        $this->assertIsArray($notification->getBody());
         $this->assertEquals($notification->getBody(), ['foo' => 'bar']);
 
         $this->assertInstanceOf('\Doctrine\Common\Collections\ArrayCollection', $notification->getMetadata());
@@ -132,7 +132,7 @@ class RequestListenerTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals(123, $notification->getId());
 
-        $this->assertInternalType('array', $notification->getBody());
+        $this->assertIsArray($notification->getBody());
         $this->assertEquals($notification->getBody(), ['foo' => 'bar']);
 
         $this->assertInstanceOf('\Doctrine\Common\Collections\ArrayCollection', $notification->getMetadata());

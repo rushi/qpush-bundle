@@ -70,7 +70,7 @@ class IronMqProviderTest extends \PHPUnit\Framework\TestCase
                 'rate_limit'                 => -1,
                 'receive_wait_time'          => 3,
                 'subscribers'                => [
-                    [ 'protocol' => 'http', 'endpoint' => 'http://fake.com' ]
+                    ['protocol' => 'http', 'endpoint' => 'http://fake.com']
                 ]
             ],
             $options
@@ -111,14 +111,13 @@ class IronMqProviderTest extends \PHPUnit\Framework\TestCase
     {
         $provider = $this->getIronMqProvider([
             'subscribers' => [
-                [ 'protocol' => 'email', 'endpoint' => 'test@foo.com' ]
+                ['protocol' => 'email', 'endpoint' => 'test@foo.com']
             ]
         ]);
 
         $this->setExpectedException('InvalidArgumentException', 'IronMQ only supports `http` or `https` subscribers!');
         $provider->create();
         $this->assertTrue($this->provider->queueExists());
-
     }
 
     public function testDestroyWillDestroyAQueue()
@@ -129,7 +128,6 @@ class IronMqProviderTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($this->provider->destroy(), 'fail2');
 
         $this->assertFalse($this->provider->queueExists(), 'fail3');
-
     }
 
     public function testPublishWillPublishAMessage()

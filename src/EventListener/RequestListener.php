@@ -34,7 +34,8 @@ use Uecode\Bundle\QPushBundle\Message\Notification;
  * @author Keith Kirk <kkirk@undergroundelephant.com>
  */
 
-class RequestListener {
+class RequestListener
+{
 	/**
 	 * Symfony Event Dispatcher
 	 *
@@ -47,7 +48,8 @@ class RequestListener {
 	 *
 	 * @param EventDispatcherInterface $dispatcher A Symfony Event Dispatcher
 	 */
-	public function __construct(EventDispatcherInterface $dispatcher) {
+	public function __construct(EventDispatcherInterface $dispatcher)
+	{
 		$this->dispatcher = $dispatcher;
 	}
 
@@ -56,7 +58,8 @@ class RequestListener {
 	 *
 	 * @param RequestEvent $event The Kernel Request's RequestEvent
 	 */
-	public function onKernelRequest(RequestEvent $event) {
+	public function onKernelRequest(RequestEvent $event)
+	{
 		if (HttpKernel::MASTER_REQUEST != $event->getRequestType()) {
 			return;
 		}
@@ -78,7 +81,8 @@ class RequestListener {
 	 * @param RequestEvent $event The Kernel Request's RequestEvent
 	 * @return string|void
 	 */
-	private function handleIronMqNotifications(RequestEvent $event) {
+	private function handleIronMqNotifications(RequestEvent $event)
+	{
 		$headers   = $event->getRequest()->headers;
 		$messageId = $headers->get('iron-message-id');
 
@@ -101,8 +105,8 @@ class RequestListener {
 		);
 
 		$this->dispatcher->dispatch(
-			Events::Notification($queue),
-			new NotificationEvent($queue, NotificationEvent::TYPE_MESSAGE, $notification)
+			new NotificationEvent($queue, NotificationEvent::TYPE_MESSAGE, $notification),
+			Events::Notification($queue)
 		);
 
 		return "IronMQ Notification Received.";
@@ -114,7 +118,8 @@ class RequestListener {
 	 * @param RequestEvent $event The Kernel Request's RequestEvent
 	 * @return string
 	 */
-	private function handleSnsNotifications(RequestEvent $event) {
+	private function handleSnsNotifications(RequestEvent $event)
+	{
 		$notification = json_decode((string) $event->getRequest()->getContent(), true);
 
 		$type = $event->getRequest()->headers->get('x-amz-sns-message-type');
@@ -138,8 +143,8 @@ class RequestListener {
 			);
 
 			$this->dispatcher->dispatch(
-				Events::Notification($queue),
-				new NotificationEvent($queue, NotificationEvent::TYPE_MESSAGE, $notification)
+				new NotificationEvent($queue, NotificationEvent::TYPE_MESSAGE, $notification),
+				Events::Notification($queue)
 			);
 
 			return "SNS Message Notification Received.";
@@ -161,8 +166,8 @@ class RequestListener {
 		);
 
 		$this->dispatcher->dispatch(
-			Events::Notification($queue),
-			new NotificationEvent($queue, NotificationEvent::TYPE_SUBSCRIPTION, $notification)
+			new NotificationEvent($queue, NotificationEvent::TYPE_SUBSCRIPTION, $notification),
+			Events::Notification($queue)
 		);
 
 		return "SNS Subscription Confirmation Received.";
@@ -176,7 +181,8 @@ class RequestListener {
 	 *
 	 * @return string
 	 */
-	private function getIronMqQueueName(RequestEvent $event, array&$message) {
+	private function getIronMqQueueName(RequestEvent $event, array &$message)
+	{
 		if (array_key_exists('_qpush_queue', $message)) {
 			return $message['_qpush_queue'];
 		} else if (null !== ($subscriberUrl = $event->getRequest()->headers->get('iron-subscriber-message-url'))) {

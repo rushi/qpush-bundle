@@ -50,7 +50,7 @@ class NotificationTest extends BaseMessageTest
         }
 
         $this->expectException(\TypeError::class);
-        
+
         new Notification(123, ['foo' => 'bar'], 'invalid argument');
     }
 }
