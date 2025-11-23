@@ -31,7 +31,7 @@ use Uecode\Bundle\QPushBundle\DependencyInjection\UecodeQPushExtension;
 /**
  * @author Keith Kirk <kkirk@undergroundelephant.com>
  */
-class UecodeQPushExtensionTest extends \PHPUnit_Framework_TestCase
+class UecodeQPushExtensionTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * QPush Extension
@@ -47,7 +47,7 @@ class UecodeQPushExtensionTest extends \PHPUnit_Framework_TestCase
      */
     private $container;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->extension = new UecodeQPushExtension();
         $this->container = new ContainerBuilder(new ParameterBag(['kernel.cache_dir' => '/tmp']));

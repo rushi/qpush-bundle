@@ -29,11 +29,11 @@ use Uecode\Bundle\QPushBundle\Message\Notification;
 /**
  * @author Keith Kirk <kkirk@undergroundelephant.com>
  */
-class NotificationEventTest extends \PHPUnit_Framework_TestCase
+class NotificationEventTest extends \PHPUnit\Framework\TestCase
 {
     protected $event;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->event = new NotificationEvent(
             'test',
@@ -42,7 +42,7 @@ class NotificationEventTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->event = null;
     }

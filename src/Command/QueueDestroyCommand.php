@@ -28,34 +28,25 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Uecode\Bundle\QPushBundle\Provider\ProviderRegistry;
 
 /**
  * @author Keith Kirk <kkirk@undergroundelephant.com>
  */
-class QueueDestroyCommand extends Command implements ContainerAwareInterface
+class QueueDestroyCommand extends Command
 {
     /**
-     * @var ContainerInterface
-     *
-     * @api
+     * @var ProviderRegistry
      */
-    protected $container;
-
-    /**
-     * Sets the Container associated with this Controller.
-     *
-     * @param ContainerInterface $container A ContainerInterface instance
-     *
-     * @api
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
+    private $registry;
 
     protected $output;
+
+    public function __construct(ProviderRegistry $registry)
+    {
+        parent::__construct();
+        $this->registry = $registry;
+    }
 
     protected function configure()
     {
@@ -80,7 +71,6 @@ class QueueDestroyCommand extends Command implements ContainerAwareInterface
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->output = $output;
-        $registry = $this->container->get('uecode_qpush');
         $questionHelper = $this->getHelperSet()->get('question');
         $name = $input->getArgument('name');
 
@@ -97,7 +87,7 @@ class QueueDestroyCommand extends Command implements ContainerAwareInterface
                 }
             }
 
-            return $this->destroyQueue($registry, $name);
+            return $this->destroyQueue($this->registry, $name);
         }
 
         if (!$input->getOption('force')) {
@@ -109,8 +99,8 @@ class QueueDestroyCommand extends Command implements ContainerAwareInterface
             }
         }
 
-        foreach ($registry->all() as $queue) {
-            $this->destroyQueue($registry, $queue->getName());
+        foreach ($this->registry->all() as $queue) {
+            $this->destroyQueue($this->registry, $queue->getName());
         }
 
         return 0;

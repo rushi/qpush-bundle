@@ -27,7 +27,7 @@ use Uecode\Bundle\QPushBundle\Event\Events;
 /**
  * @author Keith Kirk <kkirk@undergroundelephant.com>
  */
-class EventsTest extends \PHPUnit_Framework_TestCase
+class EventsTest extends \PHPUnit\Framework\TestCase
 {
     public function testConstants()
     {

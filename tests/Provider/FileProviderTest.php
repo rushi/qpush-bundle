@@ -9,7 +9,7 @@ use Uecode\Bundle\QPushBundle\Provider\FileProvider;
 /**
  * @author James Moey <jamesmoey@gmail.com>
  */
-class FileProviderTest extends \PHPUnit_Framework_TestCase
+class FileProviderTest extends \PHPUnit\Framework\TestCase
 {
     /** @var FileProvider */
     protected $provider;
@@ -17,7 +17,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
     protected $queueHash;
     protected $umask;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->umask = umask(0);
         $this->basePath = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.time().rand(0, 1000);
@@ -25,7 +25,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $this->provider = $this->getFileProvider();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->clean($this->basePath);
         umask($this->umask);

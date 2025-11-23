@@ -35,7 +35,7 @@ use Uecode\Bundle\QPushBundle\Tests\MockClient\IronMqMockClient;
 /**
  * @author Keith Kirk <kkirk@undergroundelephant.com>
  */
-class IronMqProviderTest extends \PHPUnit_Framework_TestCase
+class IronMqProviderTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Mock Client
@@ -44,12 +44,12 @@ class IronMqProviderTest extends \PHPUnit_Framework_TestCase
      */
     protected $provider;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->provider = $this->getIronMqProvider();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->provider = null;
     }

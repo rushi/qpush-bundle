@@ -8,7 +8,7 @@ use Uecode\Bundle\QPushBundle\Event\NotificationEvent;
 use Uecode\Bundle\QPushBundle\Message\Notification;
 use Uecode\Bundle\QPushBundle\Provider\IronMqProvider;
 
-class IronMqProviderTest extends \PHPUnit_Framework_TestCase
+class IronMqProviderTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Mock Client
@@ -23,7 +23,7 @@ class IronMqProviderTest extends \PHPUnit_Framework_TestCase
      */
     private $client;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (!defined("IRONMQ_TOKEN") || IRONMQ_TOKEN == 'CHANGE_ME') {
             throw new \RuntimeException('"IRONMQ_TOKEN" must be defined in tests/bootstrap.php');
@@ -43,7 +43,7 @@ class IronMqProviderTest extends \PHPUnit_Framework_TestCase
         $this->provider = $this->getIronMqProvider();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         if (!is_null($this->provider)) {
             $this->provider->destroy();

@@ -22,7 +22,7 @@
 
 namespace Uecode\Bundle\QPushBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 use Uecode\Bundle\QPushBundle\Message\Notification;
 
 /**

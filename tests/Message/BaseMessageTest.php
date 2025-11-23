@@ -27,7 +27,7 @@ use Uecode\Bundle\QPushBundle\Message;
 /**
  * @author Keith Kirk <kkirk@undergroundelephant.com>
  */
-abstract class BaseMessageTest extends \PHPUnit_Framework_TestCase
+abstract class BaseMessageTest extends \PHPUnit\Framework\TestCase
 {
     protected $message;
 

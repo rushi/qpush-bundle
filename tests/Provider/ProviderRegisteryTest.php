@@ -27,7 +27,7 @@ use Uecode\Bundle\QPushBundle\Provider\ProviderRegistry;
 /**
  * @author Keith Kirk <kkirk@undergroundelephant.com>
  */
-class ProviderRegistryTest extends \PHPUnit_Framework_TestCase
+class ProviderRegistryTest extends \PHPUnit\Framework\TestCase
 {
     public function testRegistry()
     {

@@ -1,15 +1,24 @@
 {
-    "name":         "uecode/qpush-bundle",
-    "type":         "library",
-    "description":  "Asynchronous processing for Symfony using Push Queues",
-    "keywords":     ["qpush", "pub-sub", "aws", "iron mq", "asynch", "push", "symfony", "bundle" ],
-    "homepage":     "https://github.com/uecode/qpush-bundle",
-    "license":      "Apache-2.0",
-    "authors":      [
+    "name": "uecode/qpush-bundle",
+    "type": "library",
+    "description": "Asynchronous processing for Symfony using Push Queues",
+    "keywords": [
+        "qpush",
+        "pub-sub",
+        "aws",
+        "iron mq",
+        "asynch",
+        "push",
+        "symfony",
+        "bundle"
+    ],
+    "homepage": "https://github.com/uecode/qpush-bundle",
+    "license": "Apache-2.0",
+    "authors": [
         {
-            "name":     "Keith Kirk",
-            "email":    "kkirk@undergroundelephant.com",
-            "role":     "developer",
+            "name": "Keith Kirk",
+            "email": "kkirk@undergroundelephant.com",
+            "role": "developer",
             "homepage": "http://undergroundelephant.com"
         }
     ],
@@ -17,23 +26,25 @@
         "email": "kkirk@undergroundelephant.com"
     },
     "require": {
-        "php": ">=5.6.0",
-        "doctrine/common": "~2.4",
-        "symfony/dependency-injection": "~2.3|^3.0|^4.0",
-        "symfony/config": "~2.3|^3.0|^4.0",
-        "symfony/http-kernel": "~2.3|^3.0|^4.0",
-        "symfony/console": "~2.3|^3.0|^4.0",
-        "symfony/monolog-bundle": "~2.3|^3.0|^4.0"
+        "php": "^7.4",
+        "doctrine/common": "^2.13|^3.0",
+        "symfony/dependency-injection": "^5.4",
+        "symfony/config": "^5.4",
+        "symfony/http-kernel": "^5.4",
+        "symfony/console": "^5.4",
+        "symfony/monolog-bundle": "^3.7",
+        "symfony/event-dispatcher-contracts": "^2.5|^3.0"
     },
     "require-dev": {
-        "aws/aws-sdk-php": "~2.5",
+        "aws/aws-sdk-php": "^3.0",
         "iron-io/iron_mq": "^4.0",
-        "symfony/finder": "~2.3|^3.0|^4.0",
-        "symfony/filesystem": "~2.3|^3.0|^4.0",
-        "symfony/phpunit-bridge": "^4.0",
-        "symfony/yaml": "~2.8|^3.0|^4.0",
-        "doctrine/orm": "^2.4.8",
-        "stof/doctrine-extensions-bundle": "^1.2"
+        "symfony/finder": "^5.4",
+        "symfony/filesystem": "^5.4",
+        "symfony/phpunit-bridge": "^5.4",
+        "symfony/yaml": "^5.4",
+        "doctrine/orm": "^2.13",
+        "stof/doctrine-extensions-bundle": "^1.7",
+        "phpunit/phpunit": "^9.0"
     },
     "suggest": {
         "aws/aws-sdk-php": "Required to use AWS as a Queue Provider",
