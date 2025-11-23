@@ -23,12 +23,24 @@
 namespace Uecode\Bundle\QPushBundle\Tests\MockClient;
 
 /**
+ * Mock AWS SDK v3 Client
+ * 
  * @codeCoverageIgnore
  *
  * @author Keith Kirk <kkirk@undergroundelephant.com>
  */
-class AwsMockClient extends \Aws\Common\Aws
+class AwsMockClient
 {
+    private $config;
+
+    public function __construct(array $config = [])
+    {
+        $this->config = $config;
+    }
+
+    /**
+     * SDK v2 compatibility method
+     */
     public function get($name, $throwAway = false)
     {
         if (!in_array($name, ['Sns', 'Sqs'])) {
@@ -42,5 +54,21 @@ class AwsMockClient extends \Aws\Common\Aws
         }
 
         return new SqsMockClient;
+    }
+
+    /**
+     * SDK v3 method for creating SQS client
+     */
+    public function createSqs()
+    {
+        return new SqsMockClient;
+    }
+
+    /**
+     * SDK v3 method for creating SNS client
+     */
+    public function createSns()
+    {
+        return new SnsMockClient;
     }
 }

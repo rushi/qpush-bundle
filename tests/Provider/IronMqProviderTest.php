@@ -86,7 +86,7 @@ class IronMqProviderTest extends \PHPUnit\Framework\TestCase
             $options,
             $client,
             $this->createMock(
-                'Doctrine\Common\Cache\PhpFileCache',
+                'Doctrine\Common\Cache\Cache',
                 [],
                 ['/tmp', 'qpush.ironmq.test.php']
             ),

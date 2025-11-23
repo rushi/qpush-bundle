@@ -8,6 +8,9 @@ use Uecode\Bundle\QPushBundle\Event\NotificationEvent;
 use Uecode\Bundle\QPushBundle\Message\Notification;
 use Uecode\Bundle\QPushBundle\Provider\IronMqProvider;
 
+/**
+ * @group integration
+ */
 class IronMqProviderTest extends \PHPUnit\Framework\TestCase
 {
     /**

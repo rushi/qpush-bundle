@@ -65,7 +65,7 @@ class AbstractProviderTest extends \PHPUnit\Framework\TestCase
                 'messages_to_receive'   => 1,
                 'receive_wait_time'     => 3,
                 'subscribers'           => [
-                    [ 'protocol' => 'http', 'endpoint' => 'http://fake.com' ]
+                    ['protocol' => 'http', 'endpoint' => 'http://fake.com']
                 ]
             ],
             $options
@@ -75,16 +75,8 @@ class AbstractProviderTest extends \PHPUnit\Framework\TestCase
             'test',
             $options,
             new \stdClass,
-            $this->createMock(
-                'Doctrine\Common\Cache\PhpFileCache',
-                [],
-                ['/tmp', 'qpush.aws.test.php']
-            ),
-            $this->createMock(
-                'Symfony\Bridge\Monolog\Logger',
-                [],
-                ['qpush.test']
-            )
+            $this->createMock('Doctrine\Common\Cache\Cache'),
+            $this->createMock('Monolog\Logger', [], ['qpush.test'])
         );
     }
 

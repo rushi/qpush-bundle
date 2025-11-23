@@ -83,7 +83,7 @@ class CustomProviderTest extends \PHPUnit\Framework\TestCase
         ];
 
         $cache = $this->createMock(
-            'Doctrine\Common\Cache\PhpFileCache',
+            'Doctrine\Common\Cache\Cache',
             [],
             ['/tmp', 'qpush.custom.test.php']
         );

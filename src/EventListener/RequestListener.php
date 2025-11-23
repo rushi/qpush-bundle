@@ -24,7 +24,7 @@ namespace Uecode\Bundle\QPushBundle\EventListener;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Uecode\Bundle\QPushBundle\Event\Events;
 use Uecode\Bundle\QPushBundle\Event\NotificationEvent;
@@ -54,9 +54,9 @@ class RequestListener {
 	/**
 	 * Kernel Request Event Handler for QPush Notifications
 	 *
-	 * @param GetResponseEvent $event The Kernel Request's GetResponseEvent
+	 * @param RequestEvent $event The Kernel Request's RequestEvent
 	 */
-	public function onKernelRequest(GetResponseEvent $event) {
+	public function onKernelRequest(RequestEvent $event) {
 		if (HttpKernel::MASTER_REQUEST != $event->getRequestType()) {
 			return;
 		}
@@ -75,10 +75,10 @@ class RequestListener {
 	/**
 	 * Handles Messages sent from a IronMQ Push Queue
 	 *
-	 * @param GetResponseEvent $event The Kernel Request's GetResponseEvent
+	 * @param RequestEvent $event The Kernel Request's RequestEvent
 	 * @return string|void
 	 */
-	private function handleIronMqNotifications(GetResponseEvent $event) {
+	private function handleIronMqNotifications(RequestEvent $event) {
 		$headers   = $event->getRequest()->headers;
 		$messageId = $headers->get('iron-message-id');
 
@@ -111,10 +111,10 @@ class RequestListener {
 	/**
 	 * Handles Notifications sent from AWS SNS
 	 *
-	 * @param GetResponseEvent $event The Kernel Request's GetResponseEvent
+	 * @param RequestEvent $event The Kernel Request's RequestEvent
 	 * @return string
 	 */
-	private function handleSnsNotifications(GetResponseEvent $event) {
+	private function handleSnsNotifications(RequestEvent $event) {
 		$notification = json_decode((string) $event->getRequest()->getContent(), true);
 
 		$type = $event->getRequest()->headers->get('x-amz-sns-message-type');
@@ -171,12 +171,12 @@ class RequestListener {
 	/**
 	 * Get the name of the IronMq queue.
 	 *
-	 * @param GetResponseEvent $event
+	 * @param RequestEvent $event
 	 * @param array $message
 	 *
 	 * @return string
 	 */
-	private function getIronMqQueueName(GetResponseEvent $event, array&$message) {
+	private function getIronMqQueueName(RequestEvent $event, array&$message) {
 		if (array_key_exists('_qpush_queue', $message)) {
 			return $message['_qpush_queue'];
 		} else if (null !== ($subscriberUrl = $event->getRequest()->headers->get('iron-subscriber-message-url'))) {

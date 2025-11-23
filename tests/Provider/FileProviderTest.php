@@ -63,7 +63,7 @@ class FileProviderTest extends \PHPUnit\Framework\TestCase
         );
 
         $cache = $this->createMock(
-            'Doctrine\Common\Cache\PhpFileCache',
+            'Doctrine\Common\Cache\Cache',
             [],
             ['/tmp', 'qpush.aws.test.php']
         );

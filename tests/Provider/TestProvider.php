@@ -57,25 +57,25 @@ class TestProvider extends AbstractProvider
     /**
      * @codeCoverageIgnore
      */
-    public function create() { }
+    public function create() {}
 
     /**
      * @codeCoverageIgnore
      */
-    public function publish(array $message, array $options = []) { }
+    public function publish(array $message, array $options = []) {}
 
     /**
      * @codeCoverageIgnore
      */
-    public function receive(array $options = []) { }
+    public function receive(array $options = []) {}
 
     /**
      * @codeCoverageIgnore
      */
-    public function delete($id) { }
+    public function delete($id) {}
 
     /**
      * @codeCoverageIgnore
      */
-    public function destroy() { }
+    public function destroy() {}
 }

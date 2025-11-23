@@ -6,10 +6,12 @@ services:
         alias: uecode_qpush.registry
         public: true
 
-    ### QPush Default File Cache
+    ### QPush Default File Cache (using PSR-6 adapter for Symfony 5.4)
     uecode_qpush.file_cache:
-        class: Doctrine\Common\Cache\PhpFileCache
-        arguments: ["%kernel.cache_dir%/qpush", qpush.php]
+        class: Doctrine\Common\Cache\Cache
+        factory: ['Doctrine\Common\Cache\Psr6\DoctrineProvider', 'wrap']
+        arguments:
+            - '@cache.app'
         public: false
 
     ### QPush Event Listeners

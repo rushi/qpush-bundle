@@ -27,7 +27,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Uecode\Bundle\QPushBundle\EventListener\RequestListener;
 use Uecode\Bundle\QPushBundle\Event\Events as QPushEvents;
 use Uecode\Bundle\QPushBundle\Event\NotificationEvent;
@@ -61,8 +61,8 @@ class RequestListenerTest extends \PHPUnit\Framework\TestCase
 
     public function testListenerDoesNothingForSubRequests()
     {
-        $event = new GetResponseEvent($this->kernel, new Request(), HttpKernelInterface::SUB_REQUEST);
-        $this->dispatcher->dispatch(KernelEvents::REQUEST, $event);
+        $event = new RequestEvent($this->kernel, new Request(), HttpKernelInterface::SUB_REQUEST);
+        $this->dispatcher->dispatch($event, KernelEvents::REQUEST);
 
         $this->assertFalse($event->hasResponse());
     }
@@ -71,13 +71,13 @@ class RequestListenerTest extends \PHPUnit\Framework\TestCase
     {
         $message = '{"foo": "bar","_qpush_queue":"ironmq-test"}';
 
-        $request = new Request([],[],[],[],[],[], $message);
+        $request = new Request([], [], [], [], [], [], $message);
         $request->headers->set('iron-message-id', 123);
         $request->headers->set('iron-subscriber-message-id', 456);
         $request->headers->set('iron-subscriber-message-url', 'http://foo.bar');
 
-        $event = new GetResponseEvent($this->kernel, $request, HttpKernelInterface::MASTER_REQUEST);
-        $this->dispatcher->dispatch(KernelEvents::REQUEST, $event);
+        $event = new RequestEvent($this->kernel, $request, HttpKernelInterface::MASTER_REQUEST);
+        $this->dispatcher->dispatch($event, KernelEvents::REQUEST);
 
         $this->assertTrue($event->hasResponse());
         $this->assertEquals("IronMQ Notification Received.", $event->getResponse()->getContent());
@@ -114,12 +114,12 @@ class RequestListenerTest extends \PHPUnit\Framework\TestCase
             'Timestamp' => date('Y-m-d H:i:s', 1422040603)
         ];
 
-        $request = new Request([],[],[],[],[],[], json_encode($message));
+        $request = new Request([], [], [], [], [], [], json_encode($message));
         $request->headers->set('x-amz-sns-message-type', 'Notification');
 
-        $event = new GetResponseEvent($this->kernel, $request, HttpKernelInterface::MASTER_REQUEST);
+        $event = new RequestEvent($this->kernel, $request, HttpKernelInterface::MASTER_REQUEST);
 
-        $this->dispatcher->dispatch(KernelEvents::REQUEST, $event);
+        $this->dispatcher->dispatch($event, KernelEvents::REQUEST);
 
         $this->assertTrue($event->hasResponse());
         $this->assertEquals("SNS Message Notification Received.", $event->getResponse()->getContent());
@@ -160,11 +160,11 @@ class RequestListenerTest extends \PHPUnit\Framework\TestCase
             'Timestamp'    => date('Y-m-d H:i:s', 1422040603)
         ];
 
-        $request = new Request([],[],[],[],[],[], json_encode($message));
+        $request = new Request([], [], [], [], [], [], json_encode($message));
         $request->headers->set('x-amz-sns-message-type', 'SubscriptionConfirmation');
 
-        $event = new GetResponseEvent($this->kernel, $request, HttpKernelInterface::MASTER_REQUEST);
-        $this->dispatcher->dispatch(KernelEvents::REQUEST, $event);
+        $event = new RequestEvent($this->kernel, $request, HttpKernelInterface::MASTER_REQUEST);
+        $this->dispatcher->dispatch($event, KernelEvents::REQUEST);
 
         $this->assertTrue($event->hasResponse());
         $this->assertEquals("SNS Subscription Confirmation Received.", $event->getResponse()->getContent());
