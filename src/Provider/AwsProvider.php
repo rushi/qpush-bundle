@@ -149,7 +149,7 @@ class AwsProvider extends AbstractProvider
                 'QueueUrl' => $this->queueUrl
             ]);
 
-            $this->log(200,"SQS Queue removed", ['QueueUrl' => $this->queueUrl]);
+            $this->log(200, "SQS Queue removed", ['QueueUrl' => $this->queueUrl]);
         }
 
         $key = $this->getNameWithPrefix() . '_arn';
@@ -159,14 +159,13 @@ class AwsProvider extends AbstractProvider
             // Delete the SNS Topic
             $topicArn = !empty($this->topicArn)
                 ? $this->topicArn
-                : str_replace('sqs', 'sns', $this->queueUrl)
-            ;
+                : str_replace('sqs', 'sns', $this->queueUrl);
 
             $this->sns->deleteTopic([
                 'TopicArn' => $topicArn
             ]);
 
-            $this->log(200,"SNS Topic removed", ['TopicArn' => $topicArn]);
+            $this->log(200, "SNS Topic removed", ['TopicArn' => $topicArn]);
         }
 
         return true;
@@ -227,7 +226,7 @@ class AwsProvider extends AbstractProvider
                 'push_notifications' => $options['push_notifications'],
                 'publish_time'       => microtime(true) - $publishStart
             ];
-            $this->log(200,"Message published to SNS", $context);
+            $this->log(200, "Message published to SNS", $context);
 
             return $result->get('MessageId');
         }
@@ -269,7 +268,7 @@ class AwsProvider extends AbstractProvider
             $context['message_group_id'] = $arguments['MessageGroupId'];
         }
 
-        $this->log(200,"Message published to SQS", $context);
+        $this->log(200, "Message published to SQS", $context);
 
         return $result->get('MessageId');
     }
@@ -302,7 +301,8 @@ class AwsProvider extends AbstractProvider
             ];
 
             // When using SNS, the SQS Body is the entire SNS Message
-            if(is_array($body = json_decode($message['Body'], true))
+            if (
+                is_array($body = json_decode($message['Body'], true))
                 && isset($body['Message'])
             ) {
                 $body = json_decode($body['Message'], true);
@@ -311,8 +311,7 @@ class AwsProvider extends AbstractProvider
             $message = new Message($id, $body, $metadata);
 
             $context = ['MessageId' => $id];
-            $this->log(200,"Message fetched from SQS Queue", $context);
-
+            $this->log(200, "Message fetched from SQS Queue", $context);
         }
 
         return $messages;
@@ -338,7 +337,7 @@ class AwsProvider extends AbstractProvider
             'QueueUrl'      => $this->queueUrl,
             'ReceiptHandle' => $id
         ];
-        $this->log(200,"Message deleted from SQS Queue", $context);
+        $this->log(200, "Message deleted from SQS Queue", $context);
 
         return true;
     }
@@ -376,7 +375,8 @@ class AwsProvider extends AbstractProvider
 
                 return true;
             }
-        } catch (SqsException $e) {}
+        } catch (SqsException $e) {
+        }
 
         return false;
     }
@@ -603,7 +603,7 @@ class AwsProvider extends AbstractProvider
                     'Protocol' => $protocol,
                     'SubscriptionArn' => $subscription['SubscriptionArn']
                 ];
-                $this->log(200,"Endpoint unsubscribed from SNS Topic", $context);
+                $this->log(200, "Endpoint unsubscribed from SNS Topic", $context);
 
                 return true;
             }
@@ -639,7 +639,7 @@ class AwsProvider extends AbstractProvider
             ]);
 
             $context = ['TopicArn' => $topicArn];
-            $this->log(200,"Subscription to SNS Confirmed", $context);
+            $this->log(200, "Subscription to SNS Confirmed", $context);
 
             return;
         }
@@ -648,7 +648,7 @@ class AwsProvider extends AbstractProvider
         foreach ($messages as $message) {
 
             $messageEvent = new MessageEvent($this->name, $message);
-            $dispatcher->dispatch(Events::Message($this->name), $messageEvent);
+            $dispatcher->dispatch($messageEvent, Events::Message($this->name));
         }
     }
 

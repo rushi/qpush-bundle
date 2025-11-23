@@ -70,7 +70,7 @@ class IronMqProviderTest extends \PHPUnit\Framework\TestCase
                 'rate_limit'                 => -1,
                 'receive_wait_time'          => 3,
                 'subscribers'                => [
-                    [ 'protocol' => 'http', 'endpoint' => 'http://fake.com' ]
+                    ['protocol' => 'http', 'endpoint' => 'http://fake.com']
                 ]
             ],
             $options
@@ -116,7 +116,7 @@ class IronMqProviderTest extends \PHPUnit\Framework\TestCase
 
         $provider = $this->getIronMqProvider([
             'subscribers' => [
-                [ 'protocol' => 'email', 'endpoint' => 'test@foo.com' ]
+                ['protocol' => 'email', 'endpoint' => 'test@foo.com']
             ]
         ]);
 
@@ -172,17 +172,16 @@ class IronMqProviderTest extends \PHPUnit\Framework\TestCase
 
     public function testOnNotification()
     {
-        $event = new NotificationEvent(
+        $dispatcher = $this->getMockForAbstractClass('Symfony\\Component\\EventDispatcher\\EventDispatcherInterface');
+
+        $this->provider->onNotification(new NotificationEvent(
             'test',
             NotificationEvent::TYPE_MESSAGE,
-            new Notification(123, "test", [])
-        );
+            new Notification(123, ['foo' => 'bar'], [])
+        ), NotificationEvent::TYPE_MESSAGE, $dispatcher);
 
-        $this->provider->onNotification(
-            $event,
-            NotificationEvent::TYPE_MESSAGE,
-            $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
-        );
+        // Test passes if no exception is thrown
+        $this->assertTrue(true);
     }
 
     public function testOnMessageReceived()
@@ -191,6 +190,9 @@ class IronMqProviderTest extends \PHPUnit\Framework\TestCase
             'test',
             new Message(123, ['foo' => 'bar'], [])
         ));
+
+        // Test passes if no exception is thrown
+        $this->assertTrue(true);
     }
 
     public function testQueueInfo()

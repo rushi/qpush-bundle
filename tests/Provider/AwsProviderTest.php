@@ -74,7 +74,7 @@ class AwsProviderTest extends \PHPUnit\Framework\TestCase
                 'fifo'                        => false,
                 'content_based_deduplication' => false,
                 'subscribers'           => [
-                    [ 'protocol' => 'http', 'endpoint' => 'http://fake.com' ]
+                    ['protocol' => 'http', 'endpoint' => 'http://fake.com']
                 ]
             ],
             $options
@@ -93,7 +93,9 @@ class AwsProviderTest extends \PHPUnit\Framework\TestCase
         );
 
         $logger = $this->createMock(
-            'Symfony\Bridge\Monolog\Logger', [], ['qpush.test']
+            'Symfony\Bridge\Monolog\Logger',
+            [],
+            ['qpush.test']
         );
 
         return new AwsProvider('test', $options, $client, $cache, $logger);
@@ -161,8 +163,8 @@ class AwsProviderTest extends \PHPUnit\Framework\TestCase
 
         $stub = $provider->getCache();
         $stub->expects($this->once())
-             ->method('contains')
-             ->will($this->returnValue(true));
+            ->method('contains')
+            ->will($this->returnValue(true));
 
         $this->assertTrue($provider->queueExists());
 
@@ -187,8 +189,8 @@ class AwsProviderTest extends \PHPUnit\Framework\TestCase
 
         $stub = $provider->getCache();
         $stub->expects($this->once())
-             ->method('contains')
-             ->will($this->returnValue(true));
+            ->method('contains')
+            ->will($this->returnValue(true));
 
         $this->assertTrue($provider->queueExists());
 
@@ -233,8 +235,8 @@ class AwsProviderTest extends \PHPUnit\Framework\TestCase
 
         $stub = $provider->getCache();
         $stub->expects($this->once())
-             ->method('contains')
-             ->will($this->returnValue(true));
+            ->method('contains')
+            ->will($this->returnValue(true));
 
         $this->assertTrue($provider->topicExists());
 
@@ -303,6 +305,8 @@ class AwsProviderTest extends \PHPUnit\Framework\TestCase
             new Notification(123, "test", [])
         ), NotificationEvent::TYPE_SUBSCRIPTION, $dispatcher);
 
+        // Test passes if no exception is thrown
+        $this->assertTrue(true);
     }
 
     public function testOnNotificationMessageEvent()
@@ -318,6 +322,9 @@ class AwsProviderTest extends \PHPUnit\Framework\TestCase
             NotificationEvent::TYPE_MESSAGE,
             $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
         );
+
+        // Test passes if no exception is thrown
+        $this->assertTrue(true);
     }
 
     public function testOnMessageReceived()
@@ -326,5 +333,8 @@ class AwsProviderTest extends \PHPUnit\Framework\TestCase
             'test',
             new Message(123, ['foo' => 'bar'], [])
         ));
+
+        // Test passes if no exception is thrown
+        $this->assertTrue(true);
     }
 }

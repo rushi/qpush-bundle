@@ -94,7 +94,6 @@ class IronMqProvider extends AbstractProvider
 
                 $params['push']['subscribers'][] = ['url' => $subscriber['endpoint']];
             }
-
         } else {
             $params = ['type' => 'pull'];
         }
@@ -120,7 +119,7 @@ class IronMqProvider extends AbstractProvider
         try {
             $this->ironmq->deleteQueue($queueName);
             $this->queue = null;
-        } catch ( \Exception $e) {
+        } catch (\Exception $e) {
             if (false !== strpos($e->getMessage(), "Queue not found")) {
                 $this->log(400, "Queue did not exist");
             } else {
@@ -225,7 +224,7 @@ class IronMqProvider extends AbstractProvider
         try {
             $this->ironmq->deleteMessage($this->getNameWithPrefix(), $id, $reservationId);
             $this->log(200, "Message deleted.", ['message_id' => $id]);
-        } catch ( \Exception $e) {
+        } catch (\Exception $e) {
             if (false !== strpos($e->getMessage(), "Queue not found")) {
                 $this->log(400, "Queue did not exist");
             } else {
@@ -298,8 +297,8 @@ class IronMqProvider extends AbstractProvider
         $messageEvent = new MessageEvent($this->name, $message);
 
         $dispatcher->dispatch(
-            Events::Message($this->name),
-            $messageEvent
+            $messageEvent,
+            Events::Message($this->name)
         );
     }
 
